@@ -27,24 +27,64 @@ main{max-width:1120px;margin:28px auto;padding:0 18px 55px}.progress{background:
 footer{text-align:center;color:var(--muted);padding:25px;font-size:.85rem}
 @media(max-width:780px){.hero-inner,.layout{grid-template-columns:1fr}.sidebar{position:static}.hero-art{max-width:400px}.steps{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:500px){.grid2,.structure-list,.match-grid{grid-template-columns:1fr}.topbar{font-size:.85rem}}
+
+/* Mission 5: Crack the Code */
+.secret-code{background:#13243a;color:#5de2c7;font-size:clamp(2rem,5vw,3rem);font-weight:bold;letter-spacing:.35em;text-align:center;padding:22px;border-radius:12px;margin:18px 0}
+.code-question{background:#f0f7fa;padding:20px;border-radius:14px;margin:18px 0}
+#codeAnswers{display:grid;gap:10px;margin:14px 0}
+#codeAnswers button{background:white;color:#13243a;border:2px solid #36b6a2;padding:13px;border-radius:10px;text-align:left;cursor:pointer}
+#codeAnswers button:hover:not(:disabled){background:#e1f6f2}
+#codeAnswers button:disabled{cursor:default;opacity:.7}
+#codeFeedback{min-height:24px;font-weight:bold}
+/* Locked final mission */
+.mission-lock {background:#f0f7fa;border:2px dashed var(--teal);border-radius:16px;padding:24px;text-align:center;margin-top:18px}
+.lock-icon {font-size:3rem}
+.mission-lock label {display:block;font-weight:bold;margin-top:14px}
+.mission-lock input {display:block;margin:12px auto;padding:12px;width:180px;max-width:100%;border:2px solid var(--teal);border-radius:10px;font:inherit;font-size:1.4rem;text-align:center;letter-spacing:.2em}
+.mission-lock .btn {margin:8px}
+[hidden] {display:none !important}
+
+/* Mission 1 illustrated detective story */
+.case-story{margin:22px 0}
+.story-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:16px 0}
+.story-gallery figure{margin:0;background:#f7fafc;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.story-gallery img{display:block;width:100%;height:235px;object-fit:contain;background:#edf3f7}
+.story-gallery figcaption{padding:12px 14px;font-size:.94rem;line-height:1.5}
+.story-gallery figure:last-child{grid-column:1/-1}
+.story-gallery figure:last-child img{height:280px}
+@media(max-width:600px){.story-gallery{grid-template-columns:1fr}.story-gallery figure:last-child{grid-column:auto}.story-gallery img,.story-gallery figure:last-child img{height:auto}}
 </style>
 </head>
 <body>
 <header class="topbar"><strong>🔎 STUDENT ACNE INVESTIGATOR</strong><span> Investigation for Elementary Students • Case 001</span></header>
-<section class="hero"><div class="hero-inner"><div><div class="eyebrow">Your science mystery starts here</div><h1>The Mystery Beneath Your Skin</h1><p>A hair follicle has become clogged. Investigate the skin, explore its cells, and discover how acne can affect tissues.</p><button class="btn" onclick="go(0)">Start the investigation →</button></div><div class="hero-art"><img src="images/skin-hair-follicle.png" alt="Skin cross-section showing a hair follicle"><p><b>CASE FILE 001</b><br>What is happening inside this follicle?</p></div></div></section>
+<section class="hero"><div class="hero-inner"><div><div class="eyebrow">Your science mystery starts here</div><h1>The Mystery Beneath Your Skin</h1><p>A hair follicle has become clogged. Investigate the skin, explore its cells, and discover how acne can affect tissues.</p><button class="btn" onclick="go(0)">Start the investigation →</button></div><div class="hero-art"><img src="images/05_acne_case_file.PNG" alt="Illustrated acne investigation case file with possible contributing factors"><p><b>CASE FILE 001</b><br>What is happening inside this follicle?</p></div></div></section>
 <main>
-<div class="progress"><div><b>Investigation progress</b><div class="small" id="progressText">0 of 5 missions completed</div></div><div class="bar"><div class="fill" id="progressFill"></div></div><b id="rank">ROOKIE DETECTIVE</b></div>
+<div class="progress"><div><b>Investigation progress</b><div class="small" id="progressText">0 of 6 missions completed</div></div><div class="bar"><div class="fill" id="progressFill"></div></div><b id="rank">ROOKIE DETECTIVE</b></div>
 <div class="layout">
 <aside class="sidebar"><h3>🗂️ Case missions</h3>
 <button class="mission-link active" onclick="go(0)"><span class="num">1</span>Open the case</button>
 <button class="mission-link" onclick="go(1)"><span class="num">2</span>Investigate skin</button>
 <button class="mission-link" onclick="go(2)"><span class="num">3</span>Enter the cell lab</button>
-<button class="mission-link" onclick="go(3)"><span class="num">4</span>Follow the clues</button>
-<button class="mission-link" onclick="go(4)"><span class="num">5</span>Final challenge</button>
+<button class="mission-link" onclick="go(3)"><span class="num">4</span>Follow the clues</button>                 
+<button class="mission-link" onclick="go(4)"><span class="num">5</span>Crack the Code</button>
+<button class="mission-link" onclick="go(5)"><span class="num">6</span>Final challenge</button>
 <p class="small">Suggested time: about 15 minutes. Revisit any mission whenever you like.</p></aside>
 <div>
 <section class="mission active" id="m0"><div class="kicker">Mission 1 • 2 minutes</div><h2>Open the case</h2><p class="lead">A tiny structure in the skin becomes blocked. The area may become red and swollen. What could be happening?</p>
 <div class="callout"><b>Your detective goal:</b> Find out how a change in a hair follicle can affect nearby skin tissue. You will need clues from cells, glands, and the body's response to irritation.</div>
+
+<div class="case-story">
+  <h3>📁 Case 001: The Mystery Begins</h3>
+  <p>Follow the illustrated evidence. What clues could explain why acne develops?</p>
+  <div class="story-gallery">
+    <figure><img src="images/01_first_clue_mirror.PNG" alt="Student notices spots on their face while looking in a mirror"><figcaption><b>Evidence 1:</b> A student notices changes in their skin.</figcaption></figure>
+    <figure><img src="images/02_why_do_i_get_acne.PNG" alt="Student wonders why acne happens"><figcaption><b>Evidence 2:</b> Why does acne happen? Let's investigate instead of guessing.</figcaption></figure>
+    <figure><img src="images/03_under_the_skin.PNG" alt="Magnified illustration of a hair follicle and nearby skin"><figcaption><b>Evidence 3:</b> Look beneath the skin at a hair follicle.</figcaption></figure>
+    <figure><img src="images/04_acne_detectives.PNG" alt="Two young detectives examine skin, bacteria, oil and other clues on an evidence board"><figcaption><b>Evidence 4:</b> The detectives investigate several contributing factors.</figcaption></figure>
+    <figure><img src="images/05_acne_case_file.PNG" alt="Detective case folder with a checklist of acne-related factors"><figcaption><b>Evidence 5:</b> Acne can involve blocked follicles, sebum, bacteria, hormones and inflammation.</figcaption></figure>
+  </div>
+  <div class="callout"><b>Science reminder:</b> Acne is not caused by poor hygiene. It can develop when hair follicles become blocked with sebum and dead skin cells, alongside other factors such as hormones, bacteria and inflammation.</div>
+</div>
 <div class="grid2"><div class="tile"><div style="font-size:3rem">🧴</div><h3>Clue A: Sebum</h3><p>An oily substance made by sebaceous glands. It helps keep skin and hair from drying out.</p></div><div class="tile"><div style="font-size:3rem">🧫</div><h3>Clue B: Skin cells</h3><p>Skin cells are continually replaced. Dead skin cells can collect inside a hair follicle.</p></div></div>
 <div class="interaction"><h3>Detective question: Where does acne commonly begin?</h3><div class="choice-row"><button class="choice" onclick="choice(this,false,'f0')">Inside a bone</button><button class="choice" onclick="choice(this,true,'f0')">In a hair follicle</button><button class="choice" onclick="choice(this,false,'f0')">Inside the stomach</button></div><div class="feedback" id="f0"></div></div>
 <div class="nav-actions"><span></span><button class="btn" onclick="go(1)">Next mission →</button></div></section>
@@ -80,9 +120,56 @@ footer{text-align:center;color:var(--muted);padding:25px;font-size:.85rem}
 <div class="sort-row"><b>Fourth</b><select id="o4"><option value="">Choose a clue</option><option value="sebum">Oil production and skin-cell changes</option><option value="mix">Oil and dead cells collect</option><option value="block">Follicle becomes blocked</option><option value="inflame">Inflammation may develop</option></select></div>
 <button class="btn" onclick="checkOrder()">Check my sequence</button><div class="feedback" id="orderFeedback"></div></div>
 <div class="grid2"><div class="tile"><h3>Healthy vs. acne-affected skin</h3><img src="images/healthy-vs-acne-skin.png" alt="Comparison illustration of healthy and acne-affected skin"><p>Compare the follicle and surrounding tissue.</p></div><div class="tile"><h3>Skin tissue illustration</h3><img src="images/skin-histology.png" alt="Illustration of skin tissue"><p>Look for layers and structures that make up the skin.</p></div></div>
-<div class="nav-actions"><button class="btn secondary" onclick="go(2)">← Back</button><button class="btn" onclick="go(4)">Final challenge →</button></div></section>
+<div class="nav-actions"><button class="btn secondary" onclick="go(2)">← Back</button><button class="btn" onclick="go(4)">Crack the Code →</button></div></section>
 
-<section class="mission" id="m4"><div class="kicker">Mission 5 • 3 minutes</div><h2>Final detective challenge</h2><p class="lead">You have gathered the clues. Answer all five questions to close the case.</p>
+
+<section class="mission" id="m4">
+  <div class="kicker">Mission 5 • 3 minutes</div>
+  <h2>🔐 Crack the Code</h2>
+  <p class="lead">Detective, a research file is locked! Solve four science clues to uncover the four-digit access code.</p>
+  <div class="callout"><b>Your detective goal:</b> Connect cell structures, skin tissues, and the biology of acne. Each correct answer reveals a digit.</div>
+  <h3>Secret access code</h3>
+  <div class="secret-code" id="secretCode" aria-label="Secret access code">? ? ? ?</div>
+  <div class="code-question">
+    <p class="small" id="codeProgress">Clue 1 of 4</p>
+    <h3 id="codeQuestion"></h3>
+    <div id="codeAnswers"></div>
+    <p id="codeFeedback" aria-live="polite"></p>
+    <button class="btn" type="button" id="nextCodeClue" onclick="nextCodeQuestion()" hidden>Next clue →</button>
+  </div>
+  <div class="callout" id="unlockedFile" hidden><b>🔓 File unlocked!</b> Your evidence shows that the nucleus contains DNA, sebaceous glands produce sebum, cells form tissues, and excess sebum plus dead skin cells can contribute to blocked follicles. Acne also involves other factors such as inflammation.</div>
+  <button class="btn secondary" type="button" onclick="resetCodeGame()">Restart code game</button>
+  <div class="nav-actions"><button class="btn secondary" onclick="go(3)">← Back</button><button class="btn" onclick="go(5)">Final challenge →</button></div>
+</section>
+
+<section class="mission" id="m5"><div class="kicker">Mission 6 • 3 minutes</div><h2>Final detective challenge</h2>
+<div id="mission6Lock" class="mission-lock">
+  <div class="lock-icon" aria-hidden="true">🔒</div>
+  <h3>Classified Case File</h3>
+  <p>Complete Mission 5 to discover the secret access code, then enter it below to unlock your final challenge.</p>
+  <label for="unlockInput">Four-digit access code</label>
+  <input
+    type="text"
+    id="unlockInput"
+    maxlength="4"
+    inputmode="numeric"
+    placeholder="Enter 4 digits"
+    autocomplete="off"
+  >
+
+  <button class="btn" onclick="unlockFinalMission()">
+    🔓 Unlock Case File
+  </button>
+
+  <p id="unlockFeedback" aria-live="polite"></p>
+
+  <button class="btn secondary" onclick="go(4)">
+    ← Return to Crack the Code
+  </button>
+</div>
+
+<div id="mission6Content" hidden>
+    <p class="lead">You have gathered the clues. Answer all five questions to close the case.</p>
 <div class="question" data-answer="b"><b>1. Which structure produces sebum?</b><div class="choice-row"><button class="choice" onclick="quiz(this,'a')">Nucleus</button><button class="choice" onclick="quiz(this,'b')">Sebaceous gland</button><button class="choice" onclick="quiz(this,'c')">Mitochondrion</button></div><div class="feedback"></div></div>
 <div class="question" data-answer="c"><b>2. What can contribute to blocking a hair follicle?</b><div class="choice-row"><button class="choice" onclick="quiz(this,'a')">Only water</button><button class="choice" onclick="quiz(this,'b')">Muscle fibres</button><button class="choice" onclick="quiz(this,'c')">Sebum and dead skin cells</button></div><div class="feedback"></div></div>
 <div class="question" data-answer="a"><b>3. Which cell part controls what enters and leaves?</b><div class="choice-row"><button class="choice" onclick="quiz(this,'a')">Cell membrane</button><button class="choice" onclick="quiz(this,'b')">Nucleus</button><button class="choice" onclick="quiz(this,'c')">Cytoplasm</button></div><div class="feedback"></div></div>
@@ -90,12 +177,14 @@ footer{text-align:center;color:var(--muted);padding:25px;font-size:.85rem}
 <div class="question" data-answer="c"><b>5. What is inflammation?</b><div class="choice-row"><button class="choice" onclick="quiz(this,'a')">A type of organelle</button><button class="choice" onclick="quiz(this,'b')">A layer of epidermis</button><button class="choice" onclick="quiz(this,'c')">A response to irritation or infection</button></div><div class="feedback"></div></div>
 <button class="btn" onclick="finish()">Submit final challenge</button><div class="feedback" id="finalScore"></div>
 <div class="certificate" id="certificate"><div style="font-size:3rem">🏅</div><h2>Case closed, Detective!</h2><p>You explored skin structures, learned about cells, and investigated how acne can affect a hair follicle and nearby tissue.</p><b>ACNE DETECTIVE • JUNIOR HISTOLOGY INVESTIGATOR</b></div>
-<div class="nav-actions"><button class="btn secondary" onclick="go(3)">← Back</button><button class="btn secondary" onclick="location.reload()">Restart investigation</button></div></section>
+<div class="nav-actions"><button class="btn secondary" onclick="go(4)">← Back</button><button class="btn secondary" onclick="location.reload()">Restart investigation</button></div>
+</div>
+</section>
 </div></div></main>
 <footer><b>Acne Detective • Junior Histology Investigation</b><br>Learning about cells, tissues, and acne for Grade 7–8 students.<br>Illustrations are learning aids, not diagnostic images. This website does not diagnose or treat skin conditions.</footer>
 <script>
 const done=new Set();
-function progress(){let n=done.size;document.getElementById('progressText').textContent=n+' of 5 missions completed';document.getElementById('progressFill').style.width=n*20+'%';document.getElementById('rank').textContent=n===5?'MASTER DETECTIVE':n>=3?'FIELD DETECTIVE':n?'JUNIOR DETECTIVE':'ROOKIE DETECTIVE'}
+function progress(){let n=done.size;document.getElementById('progressText').textContent=n+' of 6 missions completed';document.getElementById('progressFill').style.width=(n/6*100)+'%';document.getElementById('rank').textContent=n===6?'MASTER DETECTIVE':n>=3?'FIELD DETECTIVE':n?'JUNIOR DETECTIVE':'ROOKIE DETECTIVE'}
 function mark(n){done.add(n);progress()}
 function go(n){document.querySelectorAll('.mission').forEach((e,i)=>e.classList.toggle('active',i===n));document.querySelectorAll('.mission-link').forEach((e,i)=>e.classList.toggle('active',i===n));window.scrollTo({top:document.querySelector('.progress').offsetTop-10,behavior:'smooth'})}
 function choice(b,ok,id){let f=document.getElementById(id);f.textContent=ok?'Correct! You found the clue.':'Not quite. Think about the structures you investigated and try again.';f.className='feedback '+(ok?'good':'bad');if(ok){b.parentElement.querySelectorAll('button').forEach(x=>x.disabled=true);mark(id==='f0'?0:1)}}
@@ -107,6 +196,65 @@ function match(b){if(b.disabled)return;if(b.dataset.part){document.querySelector
 if(pairs[chosen]===b.dataset.job){let p=[...document.querySelectorAll('[data-part]')].find(x=>x.dataset.part===chosen);p.disabled=b.disabled=true;p.classList.add('done');b.classList.add('done');matched.add(chosen);document.getElementById('matchFeedback').textContent='Matched: '+matched.size+' of 4';if(matched.size===4){document.getElementById('matchFeedback').textContent='Excellent! All four pairs are correct.';mark(2)}}else document.getElementById('matchFeedback').textContent='Not that match. Try another job for '+chosen+'.';chosen=null;document.querySelectorAll('[data-part]').forEach(x=>x.classList.remove('selected'))}
 function checkOrder(){let v=[1,2,3,4].map(i=>document.getElementById('o'+i).value),f=document.getElementById('orderFeedback'),a=['sebum','mix','block','inflame'];if(v.some(x=>!x)||new Set(v).size!==4){f.textContent='Choose each of the four clues once.';f.className='feedback bad';return}if(v.every((x,i)=>x===a[i])){f.textContent='Excellent sequencing! You followed the clues in order.';f.className='feedback good';mark(3)}else{f.textContent='Try again: oil and skin-cell changes → material collects → blockage → possible inflammation.';f.className='feedback bad'}}
 function quiz(b,v){let q=b.closest('.question');if(q.dataset.done)return;let f=q.querySelector('.feedback');if(v===q.dataset.answer){f.textContent='Correct!';f.className='feedback good';q.dataset.correct='yes'}else{f.textContent='Not quite. Review the clues.';f.className='feedback bad'}q.dataset.done='yes';q.querySelectorAll('button').forEach(x=>x.disabled=true)}
-function finish(){let qs=[...document.querySelectorAll('.question')],answered=qs.filter(q=>q.dataset.done).length,f=document.getElementById('finalScore');if(answered!==5){f.textContent='Answer all five questions before submitting.';f.className='feedback bad';return}let score=qs.filter(q=>q.dataset.correct==='yes').length;f.textContent='Your score: '+score+' out of 5.';f.className='feedback '+(score>=3?'good':'bad');if(score>=3){document.getElementById('certificate').style.display='block';mark(4)}else f.textContent+=' Review the missions and try again.'}
+function finish(){let qs=[...document.querySelectorAll('.question')],answered=qs.filter(q=>q.dataset.done).length,f=document.getElementById('finalScore');if(answered!==5){f.textContent='Answer all five questions before submitting.';f.className='feedback bad';return}let score=qs.filter(q=>q.dataset.correct==='yes').length;f.textContent='Your score: '+score+' out of 5.';f.className='feedback '+(score>=3?'good':'bad');if(score>=3){document.getElementById('certificate').style.display='block';mark(5)}else f.textContent+=' Review the missions and try again.'}
+
+// Mission 5: Crack the Code
+const secretQuestions = [
+ {question:'Which cell component contains DNA?',answers:['Mitochondria','Nucleus','Cell membrane'],correct:1,digit:'4',explanation:'The nucleus contains DNA and helps direct cell activities.'},
+ {question:'Which skin structure produces sebum (oil)?',answers:['Sweat gland','Sebaceous gland','Hair shaft'],correct:1,digit:'7',explanation:'Sebaceous glands produce sebum, which helps lubricate skin and hair.'},
+ {question:'What do groups of similar cells working together form?',answers:['Organ systems','Tissues','Bones'],correct:1,digit:'2',explanation:'Cells work together to form tissues. Different tissues work together to form organs.'},
+ {question:'What can contribute to a blocked hair follicle?',answers:['Excess sebum and dead skin cells','Drinking water','The nucleus'],correct:0,digit:'9',explanation:'Excess sebum and dead skin cells can contribute to a blocked follicle. Acne has several contributing factors.'}
+];
+let codeStep=0, revealedDigits=[];
+function showCodeQuestion(){
+ const q=secretQuestions[codeStep];
+ document.getElementById('codeProgress').textContent='Clue '+(codeStep+1)+' of '+secretQuestions.length;
+ document.getElementById('codeQuestion').textContent=q.question;
+ document.getElementById('codeFeedback').textContent='Choose the best answer.';
+ document.getElementById('nextCodeClue').hidden=true;
+ const area=document.getElementById('codeAnswers');area.replaceChildren();
+ q.answers.forEach((answer,i)=>{const b=document.createElement('button');b.type='button';b.textContent=answer;b.onclick=()=>checkCodeAnswer(i);area.appendChild(b)});
+}
+function checkCodeAnswer(i){
+ const q=secretQuestions[codeStep], f=document.getElementById('codeFeedback');
+ if(i!==q.correct){f.textContent='Not quite. Think back to the earlier missions and try again.';f.className='bad';return}
+ revealedDigits.push(q.digit);
+ document.getElementById('secretCode').textContent=[...revealedDigits,...Array(4-revealedDigits.length).fill('?')].join(' ');
+ f.textContent='Correct! '+q.explanation;f.className='good';
+ document.querySelectorAll('#codeAnswers button').forEach(b=>b.disabled=true);
+ if(codeStep===secretQuestions.length-1){
+   document.getElementById('codeProgress').textContent='All clues solved!';
+   document.getElementById('codeQuestion').textContent='🔓 Laboratory unlocked!';
+   document.getElementById('unlockedFile').hidden=false;
+   mark(4);
+ } else {document.getElementById('nextCodeClue').hidden=false}
+}
+function nextCodeQuestion(){if(revealedDigits.length===codeStep+1 && codeStep<secretQuestions.length-1){codeStep++;showCodeQuestion()}}
+function resetCodeGame(){done.delete(4);done.delete(5);progress();finalMissionUnlocked=false;document.getElementById('mission6Lock').hidden=false;document.getElementById('mission6Content').hidden=true;document.getElementById('unlockInput').value='';document.getElementById('unlockFeedback').textContent='';codeStep=0;revealedDigits=[];document.getElementById('secretCode').textContent='? ? ? ?';document.getElementById('unlockedFile').hidden=true;showCodeQuestion()}
+showCodeQuestion();
+
+// Unlock the final challenge only after the code game is completed.
+let finalMissionUnlocked = false;
+function unlockFinalMission() {
+  const input = document.getElementById('unlockInput');
+  const feedback = document.getElementById('unlockFeedback');
+  if (!done.has(4)) {
+    feedback.textContent = 'Complete Mission 5: Crack the Code first!';
+    feedback.className = 'feedback bad';
+    return;
+  }
+  if (input.value.trim() !== '4729') {
+    feedback.textContent = 'Incorrect code. Check the digits you uncovered in Mission 5.';
+    feedback.className = 'feedback bad';
+    return;
+  }
+  finalMissionUnlocked = true;
+  document.getElementById('mission6Lock').hidden = true;
+  document.getElementById('mission6Content').hidden = false;
+}
+document.getElementById('unlockInput').addEventListener('keydown', function(event) {
+  if (event.key === 'Enter') unlockFinalMission();
+});
 </script>
 </body></html>
+
