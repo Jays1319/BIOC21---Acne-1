@@ -53,6 +53,35 @@ footer{text-align:center;color:var(--muted);padding:25px;font-size:.85rem}
 .story-gallery figure:last-child{grid-column:1/-1}
 .story-gallery figure:last-child img{height:280px}
 @media(max-width:600px){.story-gallery{grid-template-columns:1fr}.story-gallery figure:last-child{grid-column:auto}.story-gallery img,.story-gallery figure:last-child img{height:auto}}
+
+/* Repair the Cell interactive game */
+.repair-game{margin-top:24px}
+.repair-heading{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}
+.repair-heading h3{margin:0 0 8px}
+.repair-counter{background:#dff7f0;color:#0e6457;border-radius:999px;padding:8px 12px;font-weight:800;white-space:nowrap}
+.repair-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(210px,1fr);gap:18px;margin-top:18px}
+.repair-board{position:relative;min-height:440px;background:linear-gradient(140deg,#eaf7fb,#f5f0ff);border:2px solid #d1e2ec;border-radius:18px;overflow:hidden}
+.repair-cell{position:absolute;left:17%;top:13%;width:65%;height:71%;border-radius:48% 55% 47% 52%;background:#c2f0eb;border:12px solid #258e97;transform:rotate(-9deg);box-shadow:inset 0 0 0 4px #a1dcd6,0 12px 25px #24434922}
+.repair-cytoplasm{position:absolute;inset:10%;border-radius:48%;background:#c7eaf4;opacity:.8}
+.repair-nucleus{position:absolute;width:31%;height:36%;top:28%;left:35%;border-radius:50%;background:#aa87dd;border:7px solid #7456ac;box-shadow:inset 0 0 0 7px #c9b4f1}
+.repair-mito{position:absolute;width:22%;height:12%;border-radius:50%;background:repeating-linear-gradient(65deg,#f7ae69 0 8px,#da7e49 8px 12px);border:4px solid #b96536}
+.repair-mito-one{top:18%;left:17%;transform:rotate(35deg)}
+.repair-mito-two{bottom:18%;right:16%;transform:rotate(-20deg)}
+.repair-target{position:absolute;z-index:2;border:2px dashed #247c89;background:#fffefaee;border-radius:11px;color:#19364c;min-width:145px;max-width:47%;padding:8px;cursor:pointer;box-shadow:0 3px 10px #13243a20;text-align:center;font:inherit}
+.repair-target-title{display:block;font-size:.77rem;font-weight:800}
+.repair-target-answer{display:block;font-size:.86rem;margin-top:4px}
+.repair-target-membrane{top:5%;left:2%}
+.repair-target-cytoplasm{bottom:5%;left:2%}
+.repair-target-nucleus{top:7%;right:2%}
+.repair-target-mitochondria{bottom:5%;right:2%}
+.repair-target.correct{background:#def7e7;border:2px solid #208354}
+.repair-target:focus-visible,.repair-part:focus-visible{outline:3px solid #246fe5;outline-offset:3px}
+.repair-parts{background:white;border:1px solid #d9e6ee;border-radius:14px;padding:15px}
+.repair-parts h4{margin:0 0 5px}.repair-parts p{font-size:.88rem;margin:0 0 12px}
+.repair-part{display:block;width:100%;margin:9px 0;padding:13px 10px;text-align:left;background:#edf8fa;border:2px solid #b6dfe0;border-radius:10px;cursor:grab;color:#14354c;font:inherit;font-weight:700}
+.repair-part.selected{background:#d1f4ed;border-color:#167b73;box-shadow:0 0 0 2px #167b7333}
+.repair-part:disabled{opacity:.5;cursor:default;text-decoration:line-through}
+@media(max-width:740px){.repair-layout{grid-template-columns:1fr}.repair-board{min-height:390px}.repair-target{min-width:120px;font-size:.83rem}}
 </style>
 </head>
 <body>
@@ -108,6 +137,34 @@ footer{text-align:center;color:var(--muted);padding:25px;font-size:.85rem}
 <button class="choice" data-part="Mitochondria" onclick="match(this)">Mitochondria</button><button class="choice" data-job="nucleus" onclick="match(this)">Stores DNA and directs activities</button>
 <button class="choice" data-part="Cell membrane" onclick="match(this)">Cell membrane</button><button class="choice" data-job="cytoplasm" onclick="match(this)">Jelly-like material inside the cell</button>
 <button class="choice" data-part="Cytoplasm" onclick="match(this)">Cytoplasm</button><button class="choice" data-job="mitochondria" onclick="match(this)">Releases usable energy from food</button></div><div class="feedback" id="matchFeedback">Matched: 0 of 4</div></div>
+
+<div class="interaction repair-game" id="repairGame">
+  <div class="repair-heading"><div><h3>🧩 Repair the Cell: Science Lab Challenge</h3><p>The detective's cell model has four missing labels! Choose a component card, then click the matching numbered location. You can also drag cards into the locations.</p></div><span class="repair-counter" id="repairCount">0 / 4 placed</span></div>
+  <div class="repair-layout">
+    <div class="repair-board" aria-label="Interactive simplified animal cell diagram with four numbered label locations">
+      <div class="repair-cell">
+        <div class="repair-membrane"></div>
+        <div class="repair-cytoplasm"></div>
+        <div class="repair-nucleus"></div>
+        <div class="repair-mito repair-mito-one"></div>
+        <div class="repair-mito repair-mito-two"></div>
+      </div>
+      <button type="button" class="repair-target repair-target-membrane" data-target="membrane" onclick="placeCellPart(this)" ondragover="allowCellDrop(event)" ondrop="dropCellPart(event,this)" aria-label="Location 1: outer boundary of the cell"><span class="repair-target-title">1 · Outer boundary</span><span class="repair-target-answer">Place a label</span></button>
+      <button type="button" class="repair-target repair-target-cytoplasm" data-target="cytoplasm" onclick="placeCellPart(this)" ondragover="allowCellDrop(event)" ondrop="dropCellPart(event,this)" aria-label="Location 2: jelly-like interior of the cell"><span class="repair-target-title">2 · Jelly-like interior</span><span class="repair-target-answer">Place a label</span></button>
+      <button type="button" class="repair-target repair-target-nucleus" data-target="nucleus" onclick="placeCellPart(this)" ondragover="allowCellDrop(event)" ondrop="dropCellPart(event,this)" aria-label="Location 3: large round structure containing DNA"><span class="repair-target-title">3 · DNA centre</span><span class="repair-target-answer">Place a label</span></button>
+      <button type="button" class="repair-target repair-target-mitochondria" data-target="mitochondria" onclick="placeCellPart(this)" ondragover="allowCellDrop(event)" ondrop="dropCellPart(event,this)" aria-label="Location 4: bean-shaped energy-releasing structures"><span class="repair-target-title">4 · Energy structures</span><span class="repair-target-answer">Place a label</span></button>
+    </div>
+    <div class="repair-parts"><h4>Component cards</h4><p>Select one, then choose its location.</p>
+      <button type="button" class="repair-part" draggable="true" data-part="nucleus" onclick="selectCellPart(this)" ondragstart="dragCellPart(event,this)">🧬 Nucleus</button>
+      <button type="button" class="repair-part" draggable="true" data-part="mitochondria" onclick="selectCellPart(this)" ondragstart="dragCellPart(event,this)">⚡ Mitochondria</button>
+      <button type="button" class="repair-part" draggable="true" data-part="membrane" onclick="selectCellPart(this)" ondragstart="dragCellPart(event,this)">🛡️ Cell membrane</button>
+      <button type="button" class="repair-part" draggable="true" data-part="cytoplasm" onclick="selectCellPart(this)" ondragstart="dragCellPart(event,this)">💧 Cytoplasm</button>
+      <div class="feedback" id="repairFeedback" role="status" aria-live="polite">Choose a component card to begin.</div>
+      <button type="button" class="btn secondary" onclick="resetCellRepair()">↻ Restart cell game</button>
+    </div>
+  </div>
+  <div class="callout" id="repairSuccess" hidden><b>🔬 Model restored!</b> You identified all four parts of a typical animal cell. These structures help cells carry out their jobs. Remember: acne does not mean these organelles are broken—this is a practice model to learn cell structure.</div>
+</div>
 <div class="nav-actions"><button class="btn secondary" onclick="go(1)">← Back</button><button class="btn" onclick="go(3)">Next mission →</button></div></section>
 
 <section class="mission" id="m3"><div class="kicker">Mission 4 • 4 minutes</div><h2>Follow the clues: How acne develops</h2><p class="lead">Acne develops in the pilosebaceous unit: the hair follicle and its attached oil-producing sebaceous gland.</p><img class="diagram" src="images/acne-formation-steps.png" alt="Illustration showing stages involved in acne formation">
@@ -255,6 +312,59 @@ function unlockFinalMission() {
 document.getElementById('unlockInput').addEventListener('keydown', function(event) {
   if (event.key === 'Enter') unlockFinalMission();
 });
+
+// Repair the Cell game: click-to-place and optional drag-and-drop.
+const repairFacts={
+ nucleus:{label:'Nucleus',fact:'The nucleus contains DNA and helps direct cell activities.'},
+ mitochondria:{label:'Mitochondria',fact:'Mitochondria release usable energy from food.'},
+ membrane:{label:'Cell membrane',fact:'The cell membrane controls what enters and leaves the cell.'},
+ cytoplasm:{label:'Cytoplasm',fact:'Cytoplasm is the jelly-like material where many cell activities occur.'}
+};
+let selectedRepairPart=null;
+const repairedParts=new Set();
+function selectCellPart(button){
+ if(button.disabled)return;
+ selectedRepairPart=button.dataset.part;
+ document.querySelectorAll('.repair-part').forEach(b=>b.classList.toggle('selected',b===button));
+ document.getElementById('repairFeedback').textContent='Selected '+repairFacts[selectedRepairPart].label+'. Now choose a numbered location on the cell.';
+}
+function placeCellPart(target,part=selectedRepairPart){
+ if(target.disabled)return;
+ const feedback=document.getElementById('repairFeedback');
+ if(!part){feedback.textContent='Select a component card first.';return}
+ if(part!==target.dataset.target){
+  feedback.textContent='Not quite! Read the location clue and try another spot.';
+  feedback.className='feedback bad';
+  return;
+ }
+ repairedParts.add(part);
+ target.classList.add('correct');
+ target.querySelector('.repair-target-answer').textContent='✓ '+repairFacts[part].label;
+ target.disabled=true;
+ const card=document.querySelector('.repair-part[data-part="'+part+'"]');
+ card.disabled=true;card.classList.remove('selected');
+ selectedRepairPart=null;
+ document.getElementById('repairCount').textContent=repairedParts.size+' / 4 placed';
+ feedback.textContent='Correct! '+repairFacts[part].fact;
+ feedback.className='feedback good';
+ if(repairedParts.size===4){
+  document.getElementById('repairSuccess').hidden=false;
+  feedback.textContent='Case solved! All four cell components are correctly labelled.';
+  mark(2);
+ }
+}
+function dragCellPart(event,button){selectCellPart(button);event.dataTransfer.setData('text/plain',button.dataset.part)}
+function allowCellDrop(event){event.preventDefault()}
+function dropCellPart(event,target){event.preventDefault();placeCellPart(target,event.dataTransfer.getData('text/plain'))}
+function resetCellRepair(){
+ repairedParts.clear();selectedRepairPart=null;
+ document.querySelectorAll('.repair-part').forEach(b=>{b.disabled=false;b.classList.remove('selected')});
+ document.querySelectorAll('.repair-target').forEach(b=>{b.disabled=false;b.classList.remove('correct');b.querySelector('.repair-target-answer').textContent='Place a label'});
+ document.getElementById('repairCount').textContent='0 / 4 placed';
+ document.getElementById('repairFeedback').textContent='Choose a component card to begin.';
+ document.getElementById('repairFeedback').className='feedback';
+ document.getElementById('repairSuccess').hidden=true;
+}
 </script>
 </body></html>
 
