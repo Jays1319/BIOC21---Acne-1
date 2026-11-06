@@ -82,6 +82,24 @@ footer{text-align:center;color:var(--muted);padding:25px;font-size:.85rem}
 .repair-part.selected{background:#d1f4ed;border-color:#167b73;box-shadow:0 0 0 2px #167b7333}
 .repair-part:disabled{opacity:.5;cursor:default;text-decoration:line-through}
 @media(max-width:740px){.repair-layout{grid-template-columns:1fr}.repair-board{min-height:390px}.repair-target{min-width:120px;font-size:.83rem}}
+
+/* Mission 2 virtual microscope laboratory */
+.micro-lab{margin-top:24px}
+.micro-controls{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin:14px 0}
+.micro-controls label{font-weight:bold;display:block;margin-bottom:5px}
+.micro-controls select,.micro-controls input{max-width:100%;accent-color:#258b88}
+.micro-controls select{padding:9px;border:1px solid #cbd5e1;border-radius:9px;background:white}
+.micro-stage{position:relative;background:#17283d;border:12px solid #243f58;border-radius:20px;overflow:hidden;height:370px;display:grid;place-items:center}
+.micro-stage:before{content:'';pointer-events:none;position:absolute;z-index:2;inset:0;border-radius:50%;box-shadow:inset 0 0 0 34px #17283d88,inset 0 0 45px 24px #17283d99}
+.micro-stage img{width:100%;height:100%;object-fit:contain;transition:transform .25s ease;transform-origin:center;user-select:none}
+.micro-label{position:absolute;z-index:3;left:14px;top:12px;background:#ffffffea;border-radius:9px;padding:6px 10px;color:#173349;font-weight:800;font-size:.84rem}
+.micro-note{font-size:.86rem;color:#52677a;margin-top:9px}
+.micro-clues{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0}
+.micro-clue{border:2px solid #bedce0;background:white;border-radius:12px;padding:11px;text-align:left;color:#16374b;font-weight:bold}
+.micro-clue.found{border-color:#23865b;background:#e6f7eb}
+.micro-clue small{display:block;font-weight:normal;color:#516477}
+.micro-feedback{min-height:55px;padding:12px;background:#eaf5f8;border-radius:10px;margin:12px 0}
+@media(max-width:600px){.micro-clues{grid-template-columns:1fr}.micro-stage{height:280px;border-width:7px}.micro-stage:before{box-shadow:inset 0 0 0 18px #17283d88,inset 0 0 30px 15px #17283d99}}
 </style>
 </head>
 <body>
@@ -123,6 +141,30 @@ footer{text-align:center;color:var(--muted);padding:25px;font-size:.85rem}
 <div class="interaction"><h3>Tap a structure to inspect it</h3><div class="structure-list"><button onclick="structure('follicle',this)">🧵 Hair follicle</button><button onclick="structure('gland',this)">🟡 Sebaceous gland</button><button onclick="structure('epidermis',this)">🧱 Epidermis</button><button onclick="structure('dermis',this)">🌸 Dermis</button></div><div class="detail" id="detail">Choose one structure to reveal its clue.</div></div>
 <div class="interaction"><h3>Quick check: Which structure makes sebum?</h3><div class="choice-row"><button class="choice" onclick="choice(this,false,'f1')">Hair follicle</button><button class="choice" onclick="choice(this,true,'f1')">Sebaceous gland</button><button class="choice" onclick="choice(this,false,'f1')">Epidermis</button></div><div class="feedback" id="f1"></div></div>
 <div class="callout warning"><b>Remember:</b> Acne is not simply caused by being dirty. Several factors can contribute, including oil production, blocked follicles, bacteria that normally live on skin, hormones, and inflammation.</div>
+
+<div class="interaction micro-lab" id="virtualMicroscope">
+  <h3>🔬 Virtual Microscope Laboratory</h3>
+  <p>Welcome to the microscope station! Study the skin diagrams, magnify the view, and collect three tissue clues. This is a simplified learning microscope using illustrations, not a real microscope slide.</p>
+  <div class="micro-controls">
+    <div><label for="microSlide">Choose a slide</label><select id="microSlide" onchange="changeMicroscopeSlide()"><option value="histology">Slide A: Skin tissue illustration</option><option value="comparison">Slide B: Healthy vs. acne-affected skin</option></select></div>
+    <div><label for="microZoom">Magnification: <span id="microZoomValue">1.0×</span></label><input id="microZoom" type="range" min="1" max="3" step="0.25" value="1" oninput="updateMicroscopeZoom()" aria-label="Adjust microscope magnification"></div>
+    <button class="btn secondary" type="button" onclick="resetMicroscope()">↻ Reset view</button>
+  </div>
+  <div class="micro-stage" aria-label="Virtual microscope image viewing area">
+    <span class="micro-label" id="microSlideLabel">Slide A · Skin tissue</span>
+    <img id="microImage" src="images/skin-histology.png" alt="Educational illustration of skin tissue showing its structures">
+  </div>
+  <p class="micro-note">Tip: Move the magnification slider to zoom in. Switch slides to compare tissue structures. Magnification values describe the on-screen zoom only.</p>
+  <h3>🕵️ Find three microscope clues</h3>
+  <p>Select each structure to record its scientific role in your detective notebook.</p>
+  <div class="micro-clues">
+    <button type="button" class="micro-clue" data-clue="epidermis" onclick="inspectMicroscopeClue(this)">🧱 Epidermis <small>Outer protective layer</small></button>
+    <button type="button" class="micro-clue" data-clue="dermis" onclick="inspectMicroscopeClue(this)">🌸 Dermis <small>Layer below the epidermis</small></button>
+    <button type="button" class="micro-clue" data-clue="follicle" onclick="inspectMicroscopeClue(this)">🧵 Hair follicle <small>Where a hair grows</small></button>
+  </div>
+  <div class="micro-feedback" id="microFeedback" role="status" aria-live="polite">Clues collected: 0 of 3. Choose a structure to learn about it.</div>
+  <div class="callout" id="microSuccess" hidden><b>🏅 Microscope Explorer badge earned!</b> You found all three structures. Skin is an organ made of tissues, and hair follicles are structures within the skin where acne can develop.</div>
+</div>
 <div class="nav-actions"><button class="btn secondary" onclick="go(0)">← Back</button><button class="btn" onclick="go(2)">Next mission →</button></div></section>
 
 <section class="mission" id="m2"><div class="kicker">Mission 3 • 3 minutes</div><h2>Enter the cell lab</h2><p class="lead">All living tissues are made of cells. Cells have smaller parts called organelles, and each part has a job.</p><img class="diagram" src="images/cell-diagram.png" alt="Animal cell educational diagram">
@@ -364,6 +406,41 @@ function resetCellRepair(){
  document.getElementById('repairFeedback').textContent='Choose a component card to begin.';
  document.getElementById('repairFeedback').className='feedback';
  document.getElementById('repairSuccess').hidden=true;
+}
+
+// Mission 2: Virtual microscope laboratory
+const microscopeClueFacts={
+ epidermis:'The epidermis is the outer layer of the skin. It helps form a protective barrier.',
+ dermis:'The dermis lies beneath the epidermis and contains hair follicles, glands, nerves and blood vessels.',
+ follicle:'A hair follicle is a tube-like structure where a hair grows. Acne can develop in the follicle and its connected oil gland.'
+};
+const microscopeFound=new Set();
+function updateMicroscopeZoom(){
+ const zoom=Number(document.getElementById('microZoom').value);
+ document.getElementById('microImage').style.transform='scale('+zoom+')';
+ document.getElementById('microZoomValue').textContent=zoom.toFixed(2).replace(/0$/,'').replace(/\.$/,'')+'×';
+}
+function changeMicroscopeSlide(){
+ const comparison=document.getElementById('microSlide').value==='comparison';
+ const img=document.getElementById('microImage');
+ img.src=comparison?'images/healthy-vs-acne-skin.png':'images/skin-histology.png';
+ img.alt=comparison?'Educational comparison illustration of healthy and acne-affected skin':'Educational illustration of skin tissue showing its structures';
+ document.getElementById('microSlideLabel').textContent=comparison?'Slide B · Skin comparison':'Slide A · Skin tissue';
+ document.getElementById('microZoom').value='1';updateMicroscopeZoom();
+}
+function inspectMicroscopeClue(button){
+ const key=button.dataset.clue;
+ microscopeFound.add(key);button.classList.add('found');
+ button.setAttribute('aria-pressed','true');
+ document.getElementById('microFeedback').textContent='Clues collected: '+microscopeFound.size+' of 3. '+microscopeClueFacts[key];
+ if(microscopeFound.size===3){document.getElementById('microSuccess').hidden=false;mark(1)}
+}
+function resetMicroscope(){
+ document.getElementById('microSlide').value='histology';changeMicroscopeSlide();
+ microscopeFound.clear();
+ document.querySelectorAll('.micro-clue').forEach(b=>{b.classList.remove('found');b.setAttribute('aria-pressed','false')});
+ document.getElementById('microFeedback').textContent='Clues collected: 0 of 3. Choose a structure to learn about it.';
+ document.getElementById('microSuccess').hidden=true;
 }
 </script>
 </body></html>
