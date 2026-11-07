@@ -82,6 +82,40 @@ footer{text-align:center;color:var(--muted);padding:25px;font-size:.85rem}
 .repair-part.selected{background:#d1f4ed;border-color:#167b73;box-shadow:0 0 0 2px #167b7333}
 .repair-part:disabled{opacity:.5;cursor:default;text-decoration:line-through}
 @media(max-width:740px){.repair-layout{grid-template-columns:1fr}.repair-board{min-height:390px}.repair-target{min-width:120px;font-size:.83rem}}
+
+/* Mission 2 virtual microscope laboratory */
+.micro-lab{margin-top:24px}
+.micro-controls{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin:14px 0}
+.micro-controls label{font-weight:bold;display:block;margin-bottom:5px}
+.micro-controls select,.micro-controls input{max-width:100%;accent-color:#258b88}
+.micro-controls select{padding:9px;border:1px solid #cbd5e1;border-radius:9px;background:white}
+.micro-stage{position:relative;background:#17283d;border:12px solid #243f58;border-radius:20px;overflow:hidden;height:370px;display:grid;place-items:center}
+.micro-stage:before{content:'';pointer-events:none;position:absolute;z-index:2;inset:0;border-radius:50%;box-shadow:inset 0 0 0 34px #17283d88,inset 0 0 45px 24px #17283d99}
+.micro-stage img{width:100%;height:100%;object-fit:contain;transition:transform .25s ease;transform-origin:center;user-select:none}
+.micro-label{position:absolute;z-index:3;left:14px;top:12px;background:#ffffffea;border-radius:9px;padding:6px 10px;color:#173349;font-weight:800;font-size:.84rem}
+.micro-note{font-size:.86rem;color:#52677a;margin-top:9px}
+.micro-clues{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0}
+.micro-clue{border:2px solid #bedce0;background:white;border-radius:12px;padding:11px;text-align:left;color:#16374b;font-weight:bold}
+.micro-clue.found{border-color:#23865b;background:#e6f7eb}
+.micro-clue small{display:block;font-weight:normal;color:#516477}
+.micro-feedback{min-height:55px;padding:12px;background:#eaf5f8;border-radius:10px;margin:12px 0}
+@media(max-width:600px){.micro-clues{grid-template-columns:1fr}.micro-stage{height:280px;border-width:7px}.micro-stage:before{box-shadow:inset 0 0 0 18px #17283d88,inset 0 0 30px 15px #17283d99}}
+
+/* Mission 4: Build-a-Pimple science simulator */
+.sim-lab{margin-top:25px;border:2px solid #b8e4dc;background:linear-gradient(150deg,#f4fffc,#f7f9ff)}
+.sim-lab h3{margin-top:0}.sim-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(245px,.85fr);gap:18px;align-items:start}
+.sim-controls{background:#fff;border:1px solid #dce8ee;border-radius:14px;padding:17px}
+.sim-control{display:block;margin:0 0 18px}.sim-control strong{display:flex;justify-content:space-between;gap:8px}
+.sim-control input{display:block;width:100%;accent-color:#168b82;margin:11px 0 5px}.sim-scale{display:flex;justify-content:space-between;font-size:.77rem;color:#56697a}
+.sim-stage{background:#fff;border:1px solid #dce8ee;border-radius:14px;padding:10px;text-align:center}
+.sim-stage svg{width:100%;max-width:420px;height:auto;display:block;margin:auto}
+.sim-status{background:#e7f5f7;border-left:4px solid #2b94a4;padding:12px;border-radius:8px;margin-top:10px;font-weight:bold}
+.sim-presets{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.sim-presets button{border:1px solid #aacfd3;background:#fff;border-radius:9px;padding:9px;color:#19394b;font-weight:bold}
+.sim-presets button:hover,.sim-presets button:focus-visible{background:#e1f5f1}
+.sim-feedback{background:#fff;border-radius:10px;padding:12px;margin-top:12px;min-height:65px}
+.sim-quiz{background:#fff;border:1px solid #dce8ee;border-radius:12px;padding:15px;margin-top:15px}.sim-quiz button{margin:5px 5px 5px 0}
+.sim-note{font-size:.86rem;color:#435e6d;margin-top:10px}
+@media(max-width:760px){.sim-layout{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -119,19 +153,43 @@ footer{text-align:center;color:var(--muted);padding:25px;font-size:.85rem}
 <div class="nav-actions"><span></span><button class="btn" onclick="go(1)">Next mission →</button></div></section>
 
 <section class="mission" id="m1"><div class="kicker">Mission 2 • 3 minutes</div><h2>Investigate the skin</h2><p class="lead">Skin is an organ made of different tissues. A hair follicle is a small tube-like structure that extends down into the skin.</p>
-<img class="diagram" src="images/skin-hair-follicle.png" alt="Cross-section illustration of skin and hair follicle"><p class="caption">Illustration of a hair follicle and nearby skin structures. Choose a structure to investigate.</p>
+<img class="diagram" src="images/normal-skin-hair-follicle.gif" alt="Labelled illustration of a normal skin and hair follicle, showing the hair shaft, skin surface, sebaceous gland, and hair follicle"><p class="caption">Normal skin and hair follicle: identify the hair shaft, skin surface, sebaceous gland, and hair follicle. Choose a structure below to investigate.</p>
 <div class="interaction"><h3>Tap a structure to inspect it</h3><div class="structure-list"><button onclick="structure('follicle',this)">🧵 Hair follicle</button><button onclick="structure('gland',this)">🟡 Sebaceous gland</button><button onclick="structure('epidermis',this)">🧱 Epidermis</button><button onclick="structure('dermis',this)">🌸 Dermis</button></div><div class="detail" id="detail">Choose one structure to reveal its clue.</div></div>
 <div class="interaction"><h3>Quick check: Which structure makes sebum?</h3><div class="choice-row"><button class="choice" onclick="choice(this,false,'f1')">Hair follicle</button><button class="choice" onclick="choice(this,true,'f1')">Sebaceous gland</button><button class="choice" onclick="choice(this,false,'f1')">Epidermis</button></div><div class="feedback" id="f1"></div></div>
 <div class="callout warning"><b>Remember:</b> Acne is not simply caused by being dirty. Several factors can contribute, including oil production, blocked follicles, bacteria that normally live on skin, hormones, and inflammation.</div>
+
+<div class="interaction micro-lab" id="virtualMicroscope">
+  <h3>🔬 Virtual Microscope Laboratory</h3>
+  <p>Welcome to the microscope station! Study the skin diagrams, magnify the view, and collect three tissue clues. This is a simplified learning microscope using illustrations, not a real microscope slide.</p>
+  <div class="micro-controls">
+    <div><label for="microSlide">Choose a slide</label><select id="microSlide" onchange="changeMicroscopeSlide()"><option value="histology">Slide A: Skin tissue illustration</option><option value="comparison">Slide B: Healthy vs. acne-affected skin</option></select></div>
+    <div><label for="microZoom">Magnification: <span id="microZoomValue">1.0×</span></label><input id="microZoom" type="range" min="1" max="3" step="0.25" value="1" oninput="updateMicroscopeZoom()" aria-label="Adjust microscope magnification"></div>
+    <button class="btn secondary" type="button" onclick="resetMicroscope()">↻ Reset view</button>
+  </div>
+  <div class="micro-stage" aria-label="Virtual microscope image viewing area">
+    <span class="micro-label" id="microSlideLabel">Slide A · Skin tissue</span>
+    <img id="microImage" src="images/skin-histology.png" alt="Educational illustration of skin tissue showing its structures">
+  </div>
+  <p class="micro-note">Tip: Move the magnification slider to zoom in. Switch slides to compare tissue structures. Magnification values describe the on-screen zoom only.</p>
+  <h3>🕵️ Find three microscope clues</h3>
+  <p>Select each structure to record its scientific role in your detective notebook.</p>
+  <div class="micro-clues">
+    <button type="button" class="micro-clue" data-clue="epidermis" onclick="inspectMicroscopeClue(this)">🧱 Epidermis <small>Outer protective layer</small></button>
+    <button type="button" class="micro-clue" data-clue="dermis" onclick="inspectMicroscopeClue(this)">🌸 Dermis <small>Layer below the epidermis</small></button>
+    <button type="button" class="micro-clue" data-clue="follicle" onclick="inspectMicroscopeClue(this)">🧵 Hair follicle <small>Where a hair grows</small></button>
+  </div>
+  <div class="micro-feedback" id="microFeedback" role="status" aria-live="polite">Clues collected: 0 of 3. Choose a structure to learn about it.</div>
+  <div class="callout" id="microSuccess" hidden><b>🏅 Microscope Explorer badge earned!</b> You found all three structures. Skin is an organ made of tissues, and hair follicles are structures within the skin where acne can develop.</div>
+</div>
 <div class="nav-actions"><button class="btn secondary" onclick="go(0)">← Back</button><button class="btn" onclick="go(2)">Next mission →</button></div></section>
 
-<section class="mission" id="m2"><div class="kicker">Mission 3 • 3 minutes</div><h2>Enter the cell lab</h2><p class="lead">All living tissues are made of cells. Cells have smaller parts called organelles, and each part has a job.</p><img class="diagram" src="images/cell-diagram.png" alt="Animal cell educational diagram">
+<section class="mission" id="m2"><div class="kicker">Mission 3 • 3 minutes</div><h2>Enter the cell lab</h2><p class="lead">All living tissues are made of cells. Cells have smaller parts called organelles, and each part has a job.</p><img class="diagram" src="images/inside-a-cell.gif" alt="Animal cell educational diagram">
 <div class="callout"><b>Important connection:</b> Skin cells help form and maintain the skin's protective layers. Acne involves changes around the hair follicle and can trigger inflammation in nearby tissue. It does not mean every cell organelle is damaged.</div>
 <div class="interaction"><h3>Explore the cell parts</h3><div class="grid2">
-<div class="tile"><img src="images/nucleus.png" alt="Nucleus"><h3>Nucleus</h3><button class="btn secondary" onclick="reveal('iN')">Reveal its job</button><p id="iN" hidden>The nucleus stores genetic information (DNA) and helps direct cell activities.</p></div>
-<div class="tile"><img src="images/mitochondria.png" alt="Mitochondria"><h3>Mitochondria</h3><button class="btn secondary" onclick="reveal('iM')">Reveal its job</button><p id="iM" hidden>Mitochondria release usable energy from food so the cell can do its work.</p></div>
-<div class="tile"><img src="images/cell-membrane.png" alt="Cell membrane"><h3>Cell membrane</h3><button class="btn secondary" onclick="reveal('iC')">Reveal its job</button><p id="iC" hidden>The cell membrane surrounds the cell and controls what enters and leaves.</p></div>
-<div class="tile"><img src="images/cytoplasm.png" alt="Cytoplasm"><h3>Cytoplasm</h3><button class="btn secondary" onclick="reveal('iY')">Reveal its job</button><p id="iY" hidden>Cytoplasm is the jelly-like material inside the cell where many activities happen.</p></div></div></div>
+<div class="tile"><img src="images/nucleus-animation.gif" alt="Nucleus"><h3>Nucleus</h3><button class="btn secondary" onclick="reveal('iN')">Reveal its job</button><p id="iN" hidden>The nucleus stores genetic information (DNA) and helps direct cell activities.</p></div>
+<div class="tile"><img src="images/mitochondria-animation.gif" alt="Mitochondria"><h3>Mitochondria</h3><button class="btn secondary" onclick="reveal('iM')">Reveal its job</button><p id="iM" hidden>Mitochondria release usable energy from food so the cell can do its work.</p></div>
+<div class="tile"><img src="images/cell-membrane-animation.gif" alt="Cell membrane"><h3>Cell membrane</h3><button class="btn secondary" onclick="reveal('iC')">Reveal its job</button><p id="iC" hidden>The cell membrane surrounds the cell and controls what enters and leaves.</p></div>
+<div class="tile"><img src="images/cytoplasm-animation.gif" alt="Cytoplasm"><h3>Cytoplasm</h3><button class="btn secondary" onclick="reveal('iY')">Reveal its job</button><p id="iY" hidden>Cytoplasm is the jelly-like material inside the cell where many activities happen.</p></div></div></div>
 <div class="interaction"><h3>Cell-part matching challenge</h3><p>Choose a cell part, then choose its correct job. Match all four pairs.</p><div class="match-grid">
 <button class="choice" data-part="Nucleus" onclick="match(this)">Nucleus</button><button class="choice" data-job="membrane" onclick="match(this)">Controls what enters and leaves</button>
 <button class="choice" data-part="Mitochondria" onclick="match(this)">Mitochondria</button><button class="choice" data-job="nucleus" onclick="match(this)">Stores DNA and directs activities</button>
@@ -176,6 +234,67 @@ footer{text-align:center;color:var(--muted);padding:25px;font-size:.85rem}
 <div class="sort-row"><b>Third</b><select id="o3"><option value="">Choose a clue</option><option value="sebum">Oil production and skin-cell changes</option><option value="mix">Oil and dead cells collect</option><option value="block">Follicle becomes blocked</option><option value="inflame">Inflammation may develop</option></select></div>
 <div class="sort-row"><b>Fourth</b><select id="o4"><option value="">Choose a clue</option><option value="sebum">Oil production and skin-cell changes</option><option value="mix">Oil and dead cells collect</option><option value="block">Follicle becomes blocked</option><option value="inflame">Inflammation may develop</option></select></div>
 <button class="btn" onclick="checkOrder()">Check my sequence</button><div class="feedback" id="orderFeedback"></div></div>
+
+<div class="interaction sim-lab" id="acneSimulator">
+  <h3>🧪 Build-a-Pimple Simulator: The Follicle Experiment</h3>
+  <p><b>Detective mission:</b> Explore how oil (sebum) and dead skin cells can collect inside a hair follicle. Move the sliders to change this <b>simplified model</b>, then solve the science challenge.</p>
+  <div class="sim-presets" aria-label="Experiment examples">
+    <button type="button" onclick="simPreset(0,0)">🔍 Clear follicle</button>
+    <button type="button" onclick="simPreset(3,1)">💧 More sebum</button>
+    <button type="button" onclick="simPreset(3,3)">🧩 Buildup example</button>
+    <button type="button" onclick="simPreset(4,4)">🔴 Inflammation example</button>
+  </div>
+  <div class="sim-layout">
+    <div class="sim-controls">
+      <label class="sim-control" for="simOil"><strong><span>💧 Sebum (skin oil)</span><output id="simOilText" for="simOil">Low</output></strong>
+        <input type="range" id="simOil" min="0" max="4" step="1" value="0" oninput="updateAcneSimulator()">
+        <span class="sim-scale"><span>Less</span><span>More</span></span>
+      </label>
+      <label class="sim-control" for="simCells"><strong><span>🧩 Dead skin cell buildup</span><output id="simCellsText" for="simCells">Low</output></strong>
+        <input type="range" id="simCells" min="0" max="4" step="1" value="0" oninput="updateAcneSimulator()">
+        <span class="sim-scale"><span>Less</span><span>More</span></span>
+      </label>
+      <div class="sim-status" id="simStatus" role="status" aria-live="polite">Model observation: Open follicle</div>
+      <p id="simExplanation">With little material collecting in this model, the follicle opening remains clear.</p>
+      <p class="sim-note"><b>Remember:</b> Acne is not caused by poor hygiene. Hormones, skin bacteria (<i>Cutibacterium acnes</i>), and the body's inflammatory response can also play roles. These sliders do not predict anyone's skin.</p>
+      <button type="button" class="btn secondary" onclick="resetAcneSimulator()">↻ Reset experiment</button>
+    </div>
+    <div class="sim-stage">
+      <svg viewBox="0 0 360 340" role="img" aria-labelledby="simSvgTitle simSvgDesc" xmlns="http://www.w3.org/2000/svg">
+        <title id="simSvgTitle">Interactive cross-section of a hair follicle</title>
+        <desc id="simSvgDesc">A simplified skin cross-section with a hair follicle, sebaceous gland, and changing amounts of oil and skin cell buildup.</desc>
+        <rect x="5" y="45" width="350" height="285" rx="14" fill="#f5c5b2"/>
+        <rect x="5" y="45" width="350" height="46" rx="9" fill="#edac9a"/>
+        <path d="M5 89 H355" stroke="#d98f83" stroke-width="4" stroke-dasharray="9 7"/>
+        <text x="18" y="72" font-size="14" fill="#713b40" font-weight="bold">Epidermis</text>
+        <text x="18" y="118" font-size="14" fill="#713b40" font-weight="bold">Dermis</text>
+        <path id="simHalo" d="M138 96 Q115 152 126 245 Q134 300 177 305 Q221 300 228 245 Q240 150 218 96Z" fill="#e46a6a" opacity="0"/>
+        <path d="M150 48 Q141 113 149 245 Q155 291 179 291 Q204 288 210 245 Q220 115 204 48Z" fill="#d49b88" stroke="#b26d65" stroke-width="5"/>
+        <path d="M161 47 Q156 110 162 240 Q165 269 179 270 Q193 268 196 240 Q203 109 192 47Z" fill="#f9e8d9"/>
+        <path d="M177 21 Q176 93 178 261" fill="none" stroke="#694438" stroke-width="9" stroke-linecap="round"/>
+        <g fill="#e8a84c" stroke="#be7a36" stroke-width="2"><ellipse cx="250" cy="164" rx="34" ry="21"/><ellipse cx="259" cy="190" rx="30" ry="23"/><ellipse cx="231" cy="205" rx="26" ry="20"/></g>
+        <path d="M222 193 Q209 194 197 202" stroke="#b37a3b" stroke-width="9" fill="none"/>
+        <text x="243" y="239" font-size="12" text-anchor="middle" fill="#613e34">Sebaceous</text><text x="243" y="253" font-size="12" text-anchor="middle" fill="#613e34">gland</text>
+        <g id="simOilDots" fill="#e5a02c"></g>
+        <g id="simCellDots" fill="#ad798a"></g>
+        <ellipse id="simPlug" cx="179" cy="84" rx="17" ry="10" fill="#9a694c" opacity="0"/>
+        <text x="179" y="326" text-anchor="middle" font-size="12" fill="#5e4b50">Illustration • Not to scale</text>
+      </svg>
+      <p class="caption">Gold dots = sebum · Purple dots = dead skin cells · Red shading = possible inflammation in the model</p>
+    </div>
+  </div>
+  <div class="sim-quiz">
+    <h3>🕵️ Detective Checkpoint</h3>
+    <p>Which statement best explains how a blocked hair follicle can develop?</p>
+    <div class="choice-row">
+      <button type="button" class="choice" onclick="checkSimAnswer(this,false)">Acne is always caused by dirty skin.</button>
+      <button type="button" class="choice" onclick="checkSimAnswer(this,true)">Sebum and dead skin cells can build up inside a follicle.</button>
+      <button type="button" class="choice" onclick="checkSimAnswer(this,false)">The nucleus produces sebum.</button>
+    </div>
+    <div id="simQuizFeedback" class="feedback" role="status" aria-live="polite">Choose an answer to collect your Follicle Investigator badge.</div>
+    <div class="callout" id="simBadge" hidden><b>🏅 Follicle Investigator badge earned!</b> You explained a contributing factor in acne. Real acne is more complex than this model, and inflammation does not always occur.</div>
+  </div>
+</div>
 <div class="grid2"><div class="tile"><h3>Healthy vs. acne-affected skin</h3><img src="images/healthy-vs-acne-skin.png" alt="Comparison illustration of healthy and acne-affected skin"><p>Compare the follicle and surrounding tissue.</p></div><div class="tile"><h3>Skin tissue illustration</h3><img src="images/skin-histology.png" alt="Illustration of skin tissue"><p>Look for layers and structures that make up the skin.</p></div></div>
 <div class="nav-actions"><button class="btn secondary" onclick="go(2)">← Back</button><button class="btn" onclick="go(4)">Crack the Code →</button></div></section>
 
@@ -365,6 +484,95 @@ function resetCellRepair(){
  document.getElementById('repairFeedback').className='feedback';
  document.getElementById('repairSuccess').hidden=true;
 }
+
+// Mission 2: Virtual microscope laboratory
+const microscopeClueFacts={
+ epidermis:'The epidermis is the outer layer of the skin. It helps form a protective barrier.',
+ dermis:'The dermis lies beneath the epidermis and contains hair follicles, glands, nerves and blood vessels.',
+ follicle:'A hair follicle is a tube-like structure where a hair grows. Acne can develop in the follicle and its connected oil gland.'
+};
+const microscopeFound=new Set();
+function updateMicroscopeZoom(){
+ const zoom=Number(document.getElementById('microZoom').value);
+ document.getElementById('microImage').style.transform='scale('+zoom+')';
+ document.getElementById('microZoomValue').textContent=zoom.toFixed(2).replace(/0$/,'').replace(/\.$/,'')+'×';
+}
+function changeMicroscopeSlide(){
+ const comparison=document.getElementById('microSlide').value==='comparison';
+ const img=document.getElementById('microImage');
+ img.src=comparison?'images/healthy-vs-acne-skin.png':'images/skin-histology.png';
+ img.alt=comparison?'Educational comparison illustration of healthy and acne-affected skin':'Educational illustration of skin tissue showing its structures';
+ document.getElementById('microSlideLabel').textContent=comparison?'Slide B · Skin comparison':'Slide A · Skin tissue';
+ document.getElementById('microZoom').value='1';updateMicroscopeZoom();
+}
+function inspectMicroscopeClue(button){
+ const key=button.dataset.clue;
+ microscopeFound.add(key);button.classList.add('found');
+ button.setAttribute('aria-pressed','true');
+ document.getElementById('microFeedback').textContent='Clues collected: '+microscopeFound.size+' of 3. '+microscopeClueFacts[key];
+ if(microscopeFound.size===3){document.getElementById('microSuccess').hidden=false;mark(1)}
+}
+function resetMicroscope(){
+ document.getElementById('microSlide').value='histology';changeMicroscopeSlide();
+ microscopeFound.clear();
+ document.querySelectorAll('.micro-clue').forEach(b=>{b.classList.remove('found');b.setAttribute('aria-pressed','false')});
+ document.getElementById('microFeedback').textContent='Clues collected: 0 of 3. Choose a structure to learn about it.';
+ document.getElementById('microSuccess').hidden=true;
+}
+
+// Mission 4: Build-a-Pimple simulator. Illustrative, not a clinical model.
+const simLevels=['Low','A little','Moderate','High','Very high'];
+function simPreset(oil,cells){
+ document.getElementById('simOil').value=oil;
+ document.getElementById('simCells').value=cells;
+ updateAcneSimulator();
+}
+function updateAcneSimulator(){
+ const oil=Number(document.getElementById('simOil').value);
+ const cells=Number(document.getElementById('simCells').value);
+ document.getElementById('simOilText').textContent=simLevels[oil];
+ document.getElementById('simCellsText').textContent=simLevels[cells];
+ const oilGroup=document.getElementById('simOilDots');
+ const cellGroup=document.getElementById('simCellDots');
+ oilGroup.replaceChildren();cellGroup.replaceChildren();
+ const svgNS='http://www.w3.org/2000/svg';
+ // Fixed dot locations keep the diagram stable as students adjust sliders.
+ for(let i=0;i<oil*4;i++){
+  const dot=document.createElementNS(svgNS,'circle');
+  dot.setAttribute('cx',164+(i%4)*9);dot.setAttribute('cy',120+Math.floor(i/4)*19);
+  dot.setAttribute('r',3.5);oilGroup.appendChild(dot);
+ }
+ for(let i=0;i<cells*4;i++){
+  const dot=document.createElementNS(svgNS,'rect');
+  dot.setAttribute('x',159+(i%4)*10);dot.setAttribute('y',68+Math.floor(i/4)*11);
+  dot.setAttribute('width',7);dot.setAttribute('height',6);dot.setAttribute('rx',2);
+  cellGroup.appendChild(dot);
+ }
+ const buildup=oil+cells;
+ const plug=buildup>=5;
+ document.getElementById('simPlug').setAttribute('opacity',plug?'0.9':'0');
+ // The halo is an illustrative possible response, not an inevitable consequence.
+ document.getElementById('simHalo').setAttribute('opacity',buildup>=8?'0.5':'0');
+ let status,explanation;
+ if(buildup<=2){status='Open follicle';explanation='In this model, little material has collected, so the follicle opening stays clear.'}
+ else if(buildup<=4){status='Material collecting';explanation='More oil or dead skin cells are present. A follicle may remain open even when some material collects.'}
+ else if(buildup<=7){status='Possible blockage';explanation='Oil and dead skin cells can collect and contribute to a blocked follicle. This is one pathway involved in acne.'}
+ else{status='Blockage + possible inflammation';explanation='This example adds red shading to represent possible inflammation. Bacteria and immune responses also matter; inflammation is not guaranteed by these slider values.'}
+ document.getElementById('simStatus').textContent='Model observation: '+status;
+ document.getElementById('simExplanation').textContent=explanation;
+ document.getElementById('simSvgDesc').textContent='A simplified hair follicle with sebum level '+simLevels[oil]+' and dead skin cell buildup '+simLevels[cells]+'. Model observation: '+status+'.';
+}
+function resetAcneSimulator(){simPreset(0,0)}
+function checkSimAnswer(button,correct){
+ const f=document.getElementById('simQuizFeedback');
+ if(!correct){f.textContent='Not quite. Remember: acne is not a sign of poor hygiene, and sebaceous glands produce sebum.';f.className='feedback bad';return}
+ f.textContent='Correct! Sebum and dead skin cells can contribute to a blocked hair follicle.';
+ f.className='feedback good';
+ document.querySelectorAll('#acneSimulator .sim-quiz .choice').forEach(b=>b.disabled=true);
+ document.getElementById('simBadge').hidden=false;
+ mark(3);
+}
+updateAcneSimulator();
 </script>
 </body></html>
 
